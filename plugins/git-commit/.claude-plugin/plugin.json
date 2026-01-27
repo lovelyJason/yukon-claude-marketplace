@@ -1,0 +1,8 @@
+{
+  "name": "git-commit",
+  "description": "根据 Git 暂存区变更自动生成符合 Angular 规范的 commit message",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jasonhuang"
+  }
+}

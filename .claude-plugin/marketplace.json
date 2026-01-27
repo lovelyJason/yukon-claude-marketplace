@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-plugins",
+  "description": "Jasonhuang 的个人 Claude Code 插件集合，包含实用的开发工具和技能",
+  "owner": {
+    "name": "Jasonhuang"
+  },
+  "plugins": [
+    {
+      "name": "git-commit",
+      "description": "根据 Git 暂存区变更自动生成符合 Angular 规范的 commit message",
+      "source": "./plugins/git-commit",
+      "strict": false,
+      "skills": [
+        "./plugins/git-commit/skills/git-commit"
+      ]
+    }
+  ]
+}

@@ -8,13 +8,9 @@
 claude-plugins/
 ├── .claude-plugin/
 │   └── marketplace.json       # 插件清单
-├── plugins/
-│   └── git-commit/            # Git Commit 生成器
-│       ├── .claude-plugin/
-│       │   └── plugin.json
-│       └── skills/
-│           └── git-commit/
-│               └── SKILL.md
+├── skills/
+│   └── git-commit/
+│       └── SKILL.md           # Git Commit 生成器
 ├── agents/
 └── commands/
 ```

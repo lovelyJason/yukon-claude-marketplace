@@ -12,7 +12,7 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./plugins/git-commit/skills/git-commit"
+        "./skills/git-commit"
       ]
     }
   ]

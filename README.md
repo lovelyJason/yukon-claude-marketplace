@@ -72,28 +72,6 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 
 ---
 
-## 项目结构
-
-```
-claude-plugins/
-├── .claude-plugin/
-│   └── marketplace.json          # 插件清单（Marketplace 配置）
-├── skills/
-│   └── git-commit/
-│       └── SKILL.md              # Git Commit 生成器（独立 Skill）
-└── plugins/
-    ├── refactor-suggest/         # 代码重构建议（Plugin）
-    │   ├── commands/
-    │   │   └── refactor-suggest.md
-    │   └── agents/
-    │       └── code-smell-detector.md
-    └── dead-code/                # 死代码检测（Plugin）
-        ├── commands/
-        │   └── dead-code.md
-        └── agents/
-            └── dead-code-scanner.md
-```
-
 ## 安装使用
 
 ### 方式一：CLI

@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "claude-plugins",
+  "name": "yukon-claude-marketplace",
   "description": "Jasonhuang 的个人 Claude Code 插件集合，包含实用的开发工具和技能",
   "owner": {
     "name": "Jasonhuang"

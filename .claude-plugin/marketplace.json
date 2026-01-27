@@ -9,11 +9,22 @@
     {
       "name": "git-commit",
       "description": "根据 Git 暂存区变更自动生成符合 Angular 规范的 commit message",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/git-commit"
-      ]
+      "source": "./skills/git-commit",
+      "category": "productivity"
+    },
+    {
+      "name": "refactor-suggest",
+      "description": "分析代码质量，识别坏味道并给出重构建议和示例代码",
+      "source": "./plugins/refactor-suggest",
+      "category": "quality",
+      "keywords": ["refactor", "code-smell", "code-quality", "重构"]
+    },
+    {
+      "name": "dead-code",
+      "description": "检测未使用的导出、未引用的文件、废弃的路由页面，输出可安全删除的清单",
+      "source": "./plugins/dead-code",
+      "category": "quality",
+      "keywords": ["dead-code", "unused", "cleanup", "死代码", "清理"]
     }
   ]
 }

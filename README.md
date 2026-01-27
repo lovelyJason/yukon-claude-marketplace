@@ -1,6 +1,32 @@
 # My Claude Plugins
 
-个人 Claude Code 插件和技能集合。
+Jasonhuang 的个人 Claude Code 插件集合，包含实用的开发工具和技能。
+
+## Skills 一览
+
+### 🔀 git-commit
+
+> 根据 Git 暂存区变更，自动生成符合 **Angular Commit 规范** 的提交信息。
+
+**功能特性：**
+
+- 自动分析 `git diff --cached` 暂存区变更内容
+- 遵循angular规范，智能识别变更类型（feat / fix / refactor / docs 等）
+- 自动推断 scope 范围
+- 生成中文 commit message，支持 body 和 footer
+- 用户确认后自动执行 `git commit`
+
+**使用方式：**
+
+```
+/git-commit
+```
+
+**重启claude会话：**
+
+<img width="618" height="741" alt="image" src="https://github.com/user-attachments/assets/e56b9a5d-848e-4fc9-8f4c-0672d3bc496e" />
+
+---
 
 ## 项目结构
 
@@ -14,12 +40,6 @@ claude-plugins/
 ├── agents/
 └── commands/
 ```
-
-## 插件列表
-
-| 插件 | 说明 | 分类 |
-|------|------|------|
-| git-commit | 根据 Git 暂存区变更自动生成符合 Angular 规范的 commit message | productivity |
 
 ## 安装使用
 
@@ -35,7 +55,7 @@ claude plugin marketplace add lovelyJason/claude-plugins
 /plugin marketplace add lovelyJason/claude-plugins
 ```
 
-### 方式三：借助本作者的另一客户端软件,通过界面添加
+### 方式三：借助本作者的另一客户端软件，通过界面添加
 
 https://github.com/lovelyJason/mcp-switch
 
@@ -46,7 +66,6 @@ https://github.com/lovelyJason/mcp-switch
 安装完成
 
 <img width="900" height="600" alt="image" src="https://github.com/user-attachments/assets/a8f7a09a-599b-4535-873f-d2ec7ad96f58" />
-
 
 ### 安装插件
 

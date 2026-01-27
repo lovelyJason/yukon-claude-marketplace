@@ -1,10 +1,10 @@
-# 死代码检测
+# dead code检测
 
-你是一个代码清理专家，擅长检测项目中未使用的代码、文件和导出。分析用户指定的项目或目录，输出可安全删除的死代码清单。
+你是一个代码清理专家，擅长检测项目中未使用的代码、文件和导出。分析用户指定的项目或目录，输出可安全删除的dead code清单。
 
 ## 上下文
 
-用户需要清理项目中的死代码，包括：未使用的导出、未引用的文件、废弃的路由页面、未调用的函数等。你需要谨慎分析，确保列出的代码确实是"死的"，避免误删。
+用户需要清理项目中的dead code，包括：未使用的导出、未引用的文件、废弃的路由页面、未调用的函数等。你需要谨慎分析，确保列出的代码确实是"死的"，避免误删。
 
 ## 需求
 
@@ -32,7 +32,7 @@ $ARGUMENTS
 | 微信小程序 | `app.json` | `app.js` | `pages` 配置 |
 | uni-app | `pages.json` | `main.js` | `pages` 配置 |
 
-### 3. 检测死代码类型
+### 3. 检测dead code类型
 
 #### 3.1 未使用的导出（Unused Exports）
 
@@ -41,9 +41,9 @@ $ARGUMENTS
 ```typescript
 // utils.ts
 export function usedFn() { }      // ✅ 被其他文件 import
-export function unusedFn() { }    // ❌ 死代码：无任何 import
-export const UNUSED_CONST = 1     // ❌ 死代码
-export type UnusedType = string   // ❌ 死代码
+export function unusedFn() { }    // ❌ dead code：无任何 import
+export const UNUSED_CONST = 1     // ❌ dead code
+export type UnusedType = string   // ❌ dead code
 ```
 
 **检测方法**：
@@ -120,8 +120,8 @@ usedFn()
 
 | 置信度 | 说明 | 建议操作 |
 |-------|------|---------|
-| 🟢 高 | 确定是死代码，无任何引用 | 可直接删除 |
-| 🟡 中 | 可能是死代码，但有不确定因素 | 人工确认后删除 |
+| 🟢 高 | 确定是dead code，无任何引用 | 可直接删除 |
+| 🟡 中 | 可能是dead code，但有不确定因素 | 人工确认后删除 |
 | 🔴 低 | 可能被动态引用，无法静态分析 | 谨慎处理 |
 
 降低置信度的因素：
@@ -135,11 +135,11 @@ usedFn()
 ### 5. 生成检测报告
 
 ```markdown
-## 死代码检测报告
+## dead code检测报告
 
 ### 概览
 - 扫描文件数：X
-- 发现死代码：X 处
+- 发现dead code：X 处
 - 预计可删除行数：X 行
 - 预计可释放体积：X KB
 
@@ -200,7 +200,7 @@ npm uninstall moment @types/lodash
 - **排除测试**：只在测试文件中引用的代码，单独列出让用户决定
 - **考虑 SSR**：服务端渲染项目可能有仅在服务端使用的代码
 - **注意 barrel**：`index.ts` 转导出的要追溯最终使用
-- **动态路由**：`[id].vue`、`[...slug].vue` 等动态路由不能简单判定为死代码
+- **动态路由**：`[id].vue`、`[...slug].vue` 等动态路由不能简单判定为dead code
 - **全局组件**：`app.component()` 注册的组件不会有显式 import
 - **CSS/样式**：样式文件的引用分析需要单独处理
-- **配置文件**：`*.config.*`、`.eslintrc` 等配置文件不算死代码
+- **配置文件**：`*.config.*`、`.eslintrc` 等配置文件不算dead code

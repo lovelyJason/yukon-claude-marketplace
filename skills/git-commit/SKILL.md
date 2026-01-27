@@ -54,8 +54,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 
 ### Subject 标题
 
-- 使用祈使句，现在时态："add" 而非 "added"
-- 首字母小写
+- 使用中文简洁描述变更内容
 - 结尾不加句号
 - 不超过 50 个字符
 
@@ -92,13 +91,13 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 
 ### 3. 撰写 Subject
 
-提取变更核心意图，用简洁动词开头：
-- add：添加新内容
-- fix：修复问题
-- update：更新已有内容
-- remove：删除内容
-- refactor：重构代码
-- improve：改进优化
+提取变更核心意图，用简洁中文描述：
+- 添加xxx
+- 修复xxx
+- 更新xxx
+- 移除xxx
+- 重构xxx
+- 优化xxx
 
 ## 示例
 
@@ -106,21 +105,21 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 
 变更：新增用户登录 API
 ```
-feat(auth): add user login endpoint
+feat(auth): 添加用户登录接口
 
-- Add POST /api/auth/login endpoint
-- Implement JWT token generation
-- Add password validation
+- 新增 POST /api/auth/login 接口
+- 实现 JWT token 生成
+- 添加密码校验
 ```
 
 ### 示例 2：修复 Bug
 
 变更：修复分页参数错误
 ```
-fix(pagination): correct page number calculation
+fix(pagination): 修复分页页码计算错误
 
-Fix off-by-one error when calculating page offset.
-The offset was starting from 1 instead of 0.
+修复计算页偏移量时的差一错误，
+偏移量之前从1开始，应从0开始。
 
 Closes #42
 ```
@@ -129,21 +128,21 @@ Closes #42
 
 变更：拆分大型组件
 ```
-refactor(components): split UserProfile into smaller components
+refactor(components): 拆分 UserProfile 为多个子组件
 
-Extract Avatar, UserInfo, and UserActions into separate files
-to improve maintainability and reusability.
+将 Avatar、UserInfo、UserActions 提取为独立文件，
+提升可维护性和复用性。
 ```
 
 ### 示例 4：多文件变更
 
 变更：升级依赖 + 适配代码
 ```
-build(deps): upgrade React to v18
+build(deps): 升级 React 至 v18
 
-- Update react and react-dom to 18.2.0
-- Migrate from ReactDOM.render to createRoot
-- Update TypeScript types
+- 更新 react 和 react-dom 到 18.2.0
+- 从 ReactDOM.render 迁移到 createRoot
+- 更新 TypeScript 类型定义
 ```
 
 ## 执行步骤
@@ -160,4 +159,4 @@ build(deps): upgrade React to v18
 - 如果没有暂存的变更，提示用户先 `git add`
 - 如果变更内容复杂，可生成多行 body
 - 如果有破坏性变更，必须在 footer 标注 BREAKING CHANGE
-- 优先使用英文，除非用户明确要求中文
+- 默认使用中文撰写 commit message，除非用户明确要求英文

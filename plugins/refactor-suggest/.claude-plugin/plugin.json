@@ -1,0 +1,10 @@
+{
+  "name": "refactor-suggest",
+  "description": "分析代码质量，识别坏味道并给出重构建议和示例代码",
+  "author": {
+    "name": "Jasonhuang"
+  },
+  "version": "0.1.0",
+  "keywords": ["refactor", "code-smell", "code-quality", "重构"],
+  "category": "quality"
+}

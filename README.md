@@ -98,11 +98,20 @@ https://github.com/lovelyJason/mcp-switch
 
 <img width="900" height="600" alt="image" src="https://github.com/user-attachments/assets/a8f7a09a-599b-4535-873f-d2ec7ad96f58" />
 
-### 安装插件
+### 安装skills
 
 ```bash
-claude plugin install git-commit@lovelyJason/claude-plugins
+claude plugin install dev-skills@lovelyJason/claude-plugins
 
 # REPL环境
-/plugin install git-commit@lovelyJason/claude-plugins
+/plugin install dev-skills@lovelyJason/claude-plugins
+```
+
+## 安装plugins
+
+```bash
+claude plugin install dead-code@yukon-claude-marketplace
+
+# REPL环境
+/plugin install dead-code@yukon-claude-marketplace
 ```

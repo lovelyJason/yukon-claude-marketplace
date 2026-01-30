@@ -12,7 +12,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/git-commit"
+        "./skills/git-commit",
+        "./skills/error-explain",
+        "./skills/prompt-optimize"
       ]
     },
     {

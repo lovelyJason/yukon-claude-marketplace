@@ -3,8 +3,5 @@
   "description": "检测未使用的导出、未引用的文件、废弃的路由页面，输出可安全删除的清单",
   "author": {
     "name": "Jasonhuang"
-  },
-  "version": "0.1.0",
-  "keywords": ["dead-code", "unused", "cleanup", "dead code", "清理"],
-  "category": "quality"
+  }
 }

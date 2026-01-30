@@ -4,6 +4,10 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 
 ## 插件一览
 
+## Skills（技能集合）
+
+> 安装 `dev-skills` 即可获得以下所有技能
+
 ### 🔀 git-commit
 
 > 根据 Git 暂存区变更，自动生成符合 **Angular Commit 规范** 的提交信息。
@@ -11,7 +15,7 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 **功能特性：**
 
 - 自动分析 `git diff --cached` 暂存区变更内容
-- 遵循angular规范，智能识别变更类型（feat / fix / refactor / docs 等）
+- 遵循 Angular 规范，智能识别变更类型（feat / fix / refactor / docs 等）
 - 自动推断 scope 范围
 - 生成中文 commit message，支持 body 和 footer
 - 用户确认后自动执行 `git commit`
@@ -22,11 +26,59 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 /git-commit
 ```
 
-**重启claude会话：**
+**重启 claude 会话：**
 
 <img width="618" height="741" alt="image" src="https://github.com/user-attachments/assets/e56b9a5d-848e-4fc9-8f4c-0672d3bc496e" />
 
 ---
+
+### 🐛 error-explain
+
+> 解析各类报错堆栈，定位问题根因，给出具体修复建议和示例代码。
+
+**功能特性：**
+
+- 支持 JavaScript/TypeScript、Node.js、Vue/React/Nuxt/Next 等框架错误
+- 支持 Webpack/Vite/Rollup 构建工具错误
+- 支持微信小程序、uniapp 错误
+- 支持数据库（MySQL/MongoDB/Redis）和网络请求（CORS/SSL）错误
+- 按概率排序可能原因
+- 提供修复前后代码对比
+- 附带预防措施和最佳实践
+
+**使用方式：**
+
+```
+/error-explain
+```
+
+或直接粘贴报错信息，AI 会自动识别。
+
+---
+
+### ✨ prompt-optimize
+
+> 优化用户的 AI Prompt，让输出更精准、更符合预期。
+
+**功能特性：**
+
+- 分析 Prompt 结构完整性（角色/目标/上下文/格式/约束）
+- 检查清晰度和歧义问题
+- 提供优化建议和改进版本
+- 内置代码生成、代码审查、文档生成等 Prompt 模板
+- 支持 Few-shot 示例优化
+
+**使用方式：**
+
+```
+/prompt-optimize
+```
+
+或说"帮我优化这个 prompt"。
+
+---
+
+## Plugins（插件）
 
 ### 🔍 refactor-suggest
 

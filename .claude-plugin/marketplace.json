@@ -7,10 +7,13 @@
   },
   "plugins": [
     {
-      "name": "git-commit",
-      "description": "根据 Git 暂存区变更自动生成符合 Angular 规范的 commit message",
-      "source": "./skills/git-commit",
-      "category": "productivity"
+      "name": "dev-skills",
+      "description": "开发工具技能集合，包含 Git 提交、代码生成等实用功能",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/git-commit"
+      ]
     },
     {
       "name": "refactor-suggest",

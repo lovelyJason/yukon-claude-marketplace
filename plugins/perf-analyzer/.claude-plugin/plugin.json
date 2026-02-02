@@ -1,0 +1,7 @@
+{
+  "name": "perf-analyzer",
+  "description": "分析前端项目性能，检测 bundle 大小、大依赖、tree-shaking 问题，提供优化建议",
+  "author": {
+    "name": "Jasonhuang"
+  }
+}

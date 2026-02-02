@@ -14,7 +14,8 @@
       "skills": [
         "./skills/git-commit",
         "./skills/error-explain",
-        "./skills/prompt-optimize"
+        "./skills/prompt-optimize",
+        "./skills/secret-scan"
       ]
     },
     {
@@ -37,6 +38,13 @@
       "source": "./plugins/pm-proto-builder",
       "category": "productivity",
       "keywords": ["prototype", "原型", "PRD", "产品", "后台", "爬取", "playwright"]
+    },
+    {
+      "name": "perf-analyzer",
+      "description": "分析前端项目性能，检测 bundle 大小、大依赖、tree-shaking 问题，提供优化建议",
+      "source": "./plugins/perf-analyzer",
+      "category": "quality",
+      "keywords": ["performance", "bundle", "tree-shaking", "性能", "优化", "依赖分析"]
     }
   ]
 }

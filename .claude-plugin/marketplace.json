@@ -40,6 +40,15 @@
       "keywords": ["prototype", "原型", "PRD", "产品", "后台", "爬取", "playwright"]
     },
     {
+      "name": "writing-skills",
+      "description": "写作技能集合，包含周报生成、文档写作等实用功能",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/weekly-report"
+      ]
+    },
+    {
       "name": "perf-analyzer",
       "description": "分析前端项目性能，检测 bundle 大小、大依赖、tree-shaking 问题，提供优化建议",
       "source": "./plugins/perf-analyzer",

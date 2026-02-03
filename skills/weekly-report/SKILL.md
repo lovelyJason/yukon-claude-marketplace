@@ -206,29 +206,26 @@ git -C {repoPath} log --since="{startDate}" --until="{endDate} 23:59:59" --autho
 git -C {repoPath} log --since="{startDate}" --until="{endDate} 23:59:59" --author="$(git -C {repoPath} config user.name)" --no-merges --format="%ad" --date=format:"%Y-%m-%d" | sort | uniq -c
 ```
 
-**执行策略 - 根据仓库数量选择**：
+**执行策略 - 所有仓库一律并行**：
 
-- **≤ 3 个仓库**：直接串行执行，使用多个 Bash 工具调用并行发出（同一个消息中发出多个 Bash 调用，每个仓库的 3 条命令合并为 1 条用 `&&` 连接）
-- **> 3 个仓库**：使用 Task 工具启动多个并行 agent，每个 agent 负责一个仓库的数据收集，最后汇总结果
+**关键**：不管有多少个仓库，都必须在**同一条消息**中发出所有 Bash 工具调用，让它们并行执行。绝对不能一个一个串行跑！
 
-**并行执行示例**（≤ 3 个仓库，同时发出多个 Bash 调用）：
-
-```
-# 在同一个消息中并行发出：
-Bash: git -C /path/to/repo-a log ... && git -C /path/to/repo-a log --stat ...
-Bash: git -C /path/to/repo-b log ... && git -C /path/to/repo-b log --stat ...
-Bash: git -C /path/to/repo-c log ... && git -C /path/to/repo-c log --stat ...
-```
-
-**并行执行示例**（> 3 个仓库，使用 Task agent）：
+每个仓库的 3 条 git 命令合并为 1 条（用 `&&` 连接），然后所有仓库的 Bash 调用在同一条消息中并行发出：
 
 ```
-# 为每个仓库启动一个 Task agent：
-Task(agent=Bash): "在 /path/to/repo-a 收集 {startDate} 到 {endDate} 的 git log"
-Task(agent=Bash): "在 /path/to/repo-b 收集 {startDate} 到 {endDate} 的 git log"
-Task(agent=Bash): "在 /path/to/repo-c 收集 {startDate} 到 {endDate} 的 git log"
-...
+# 关键：在同一条消息中并行发出所有 Bash 调用（不是一个一个发！）
+# 每个 Bash 调用负责一个仓库，同时发出 = 并行执行
+
+Bash(description="收集 repo-a 提交记录"): git -C /path/to/repo-a config user.name && git -C /path/to/repo-a log --since="..." --until="..." --pretty=format:"%h|%ad|%s" --date=format:"%Y-%m-%d" --author="$(git -C /path/to/repo-a config user.name)" --no-merges && echo "---STAT---" && git -C /path/to/repo-a log --since="..." --until="..." --author="$(git -C /path/to/repo-a config user.name)" --no-merges --stat
+
+Bash(description="收集 repo-b 提交记录"): git -C /path/to/repo-b config user.name && git -C /path/to/repo-b log ...（同上）
+
+Bash(description="收集 repo-c 提交记录"): git -C /path/to/repo-c config user.name && git -C /path/to/repo-c log ...（同上）
+
+# ...对所有仓库都在这一条消息里发出
 ```
+
+**注意**：如果某个仓库在统计周期内没有提交，git log 会返回空输出，这是正常的，跳过即可。
 
 **多仓库合并规则**：
 - 每个仓库的提交记录独立收集

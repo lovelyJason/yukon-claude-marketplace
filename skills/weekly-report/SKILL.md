@@ -206,24 +206,30 @@ git -C {repoPath} log --since="{startDate}" --until="{endDate} 23:59:59" --autho
 git -C {repoPath} log --since="{startDate}" --until="{endDate} 23:59:59" --author="$(git -C {repoPath} config user.name)" --no-merges --format="%ad" --date=format:"%Y-%m-%d" | sort | uniq -c
 ```
 
-**执行策略 - 所有仓库一律并行**：
+**执行策略 - 单次 Bash 调用遍历所有仓库**：
 
-**关键**：不管有多少个仓库，都必须在**同一条消息**中发出所有 Bash 工具调用，让它们并行执行。绝对不能一个一个串行跑！
+**关键**：不管有多少个仓库，都必须在**一次 Bash 调用**中用 `for` 循环遍历所有仓库。绝对不能每个仓库发一次 Bash 调用（会触发 `Sibling tool call errored` 错误）！
 
-每个仓库的 3 条 git 命令合并为 1 条（用 `&&` 连接），然后所有仓库的 Bash 调用在同一条消息中并行发出：
+```bash
+# 一次 Bash 调用，for 循环遍历所有仓库
+# {startDate} 和 {endDate} 替换为实际日期
 
+for repo in /path/to/repo-a /path/to/repo-b /path/to/repo-c; do
+  echo "====== $(basename "$repo") ======"
+  AUTHOR="$(git -C "$repo" config user.name)"
+  echo "--- COMMITS ---"
+  git -C "$repo" log --since="{startDate}" --until="{endDate} 23:59:59" --pretty=format:"%h|%ad|%s" --date=format:"%Y-%m-%d %H:%M" --author="$AUTHOR" --no-merges 2>/dev/null
+  echo ""
+  echo "--- STAT ---"
+  git -C "$repo" log --since="{startDate}" --until="{endDate} 23:59:59" --author="$AUTHOR" --no-merges --stat 2>/dev/null
+  echo ""
+  echo "--- DAILY COUNT ---"
+  git -C "$repo" log --since="{startDate}" --until="{endDate} 23:59:59" --author="$AUTHOR" --no-merges --format="%ad" --date=format:"%Y-%m-%d" 2>/dev/null | sort | uniq -c
+  echo ""
+done
 ```
-# 关键：在同一条消息中并行发出所有 Bash 调用（不是一个一个发！）
-# 每个 Bash 调用负责一个仓库，同时发出 = 并行执行
 
-Bash(description="收集 repo-a 提交记录"): git -C /path/to/repo-a config user.name && git -C /path/to/repo-a log --since="..." --until="..." --pretty=format:"%h|%ad|%s" --date=format:"%Y-%m-%d" --author="$(git -C /path/to/repo-a config user.name)" --no-merges && echo "---STAT---" && git -C /path/to/repo-a log --since="..." --until="..." --author="$(git -C /path/to/repo-a config user.name)" --no-merges --stat
-
-Bash(description="收集 repo-b 提交记录"): git -C /path/to/repo-b config user.name && git -C /path/to/repo-b log ...（同上）
-
-Bash(description="收集 repo-c 提交记录"): git -C /path/to/repo-c config user.name && git -C /path/to/repo-c log ...（同上）
-
-# ...对所有仓库都在这一条消息里发出
-```
+**为什么不用多个并行 Bash 调用？** Claude Code 对同一条消息中的并行工具调用有数量限制，仓库多了会报 `Sibling tool call errored`。用单次 Bash + `for` 循环完全规避此问题，且本地 git log 非常快，10+ 仓库也就几秒。
 
 **注意**：如果某个仓库在统计周期内没有提交，git log 会返回空输出，这是正常的，跳过即可。
 

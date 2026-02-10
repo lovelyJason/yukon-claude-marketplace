@@ -13,26 +13,34 @@ description: 配置 AI 编辑器相关的 gitignore 规则、清理已提交的�
 2. **清理已提交文件**：如果这些文件已被 git 追踪，从仓库中删除（保留本地）
 3. **配置 shell 权限**：询问用户是否配置编辑器的 shell 命令权限
 
-## 支持的 AI 编辑器
+## 忽略策略
 
-| 编辑器 | 配置路径 | 说明 |
-|-------|---------|------|
-| Claude Code | `.claude/` | 包含 settings.local.json 等本地配置 |
-| Cursor | `.cursor/` `.cursorignore` `.cursorindexingignore` `.cursorrules` | AI 代码编辑器 |
-| Windsurf | `.windsurf/` `.windsurfrules` | Codeium 的 AI 编辑器 |
-| GitHub Copilot | `.copilot/` `.github/copilot-instructions.md` | GitHub 官方 AI 助手 |
-| Cline | `.cline/` `.clinerules` `.clineignore` | VS Code AI 插件 |
-| Aider | `.aider*` `.aiderignore` | 终端 AI 编程工具 |
-| Continue | `.continue/` `.continuerules` `.continueignore` | 开源 AI 编程助手 |
-| Gemini | `.gemini/` | Google AI 编辑器 |
-| Agent | `.agent/` | 通用 AI Agent 配置 |
-| Amazon Q | `.amazonq/` `.q/` | AWS AI 编程助手 |
-| Augment | `.augment/` `.augmentignore` | Augment Code AI |
-| Codex | `.codex/` | OpenAI Codex 配置 |
-| JetBrains AI | `.junie/` | JetBrains IDE AI 功能 |
-| Sourcegraph Cody | `.cody/` | Sourcegraph AI 助手 |
-| Tabnine | `.tabnine/` | AI 代码补全工具 |
-| Supermaven | `.supermaven/` | AI 代码补全工具 |
+**核心原则**：只忽略**本地缓存和敏感配置文件**，保留**团队共享的 commands、skills、rules**。
+
+### 应该忽略的（本地缓存/敏感配置）
+
+| 编辑器 | 需忽略的文件 | 原因 |
+|-------|-------------|------|
+| Claude Code | `.claude/settings.local.json`<br>`.claude/todos.local.json`<br>`.claude/plugins/`<br>`.claude/statsig/` | 本地权限配置、插件缓存 |
+| Cursor | `.cursor/index/`<br>`.cursor/cache/`<br>`.cursor/logs/`<br>`.cursor/mcp.json` | 索引缓存、日志、MCP 本地配置 |
+| Windsurf | `.windsurf/cache/`<br>`.windsurf/logs/` | 缓存和日志 |
+| Aider | `.aider.chat.history.md`<br>`.aider.input.history`<br>`.aider.tags.cache.v3/` | 聊天历史、缓存 |
+
+### 不应该忽略的（团队共享）
+
+| 文件 | 用途 | 建议 |
+|-----|------|------|
+| `.cursorrules` | Cursor AI 行为规则 | 团队共享 |
+| `.cursor/rules/` | Cursor 规则目录 | 团队共享 |
+| `.cursor/commands/` | Cursor 自定义命令 | 团队共享 |
+| `.windsurfrules` | Windsurf AI 行为规则 | 团队共享 |
+| `.windsurf/rules/` | Windsurf 规则目录 | 团队共享 |
+| `.claude/commands/` | Claude Code 自定义命令 | 团队共享 |
+| `.claude/settings.json` | Claude Code 项目级配置 | 团队共享（注意不是 settings.local.json） |
+| `CLAUDE.md` | Claude Code 项目说明 | 团队共享 |
+| `.clinerules` | Cline AI 行为规则 | 团队共享 |
+| `.github/copilot-instructions.md` | Copilot 指令 | 团队共享 |
+| `.aider.conf.yml` | Aider 项目配置 | 团队共享 |
 
 ## 执行流程
 
@@ -99,74 +107,45 @@ AskUserQuestion({
 
 ### Step 4: 更新 .gitignore
 
-根据用户选择，添加对应的忽略规则：
+根据用户选择，添加对应的忽略规则。
+
+**关键**：只忽略**缓存、日志、本地敏感配置**，保留 commands/、rules/、skills/ 等团队共享目录！
 
 ```bash
-# 完整的 AI 编辑器 gitignore 规则
+# AI 编辑器 gitignore 规则（只忽略缓存和本地敏感配置）
 cat >> .gitignore << 'EOF'
 
-# ===== AI Editors =====
-# Claude Code
-.claude/
+# ===== AI Editors (本地缓存/敏感配置，不提交) =====
 
-# Cursor
-.cursor/
-.cursorrules
-.cursorignore
-.cursorindexingignore
+# Claude Code - 只忽略本地配置，保留 commands/、settings.json、CLAUDE.md
+.claude/settings.local.json
+.claude/todos.local.json
+.claude/plugins/
+.claude/statsig/
 
-# Windsurf
-.windsurf/
-.windsurfrules
+# Cursor - 只忽略缓存和日志，保留 rules/、commands/
+.cursor/index/
+.cursor/cache/
+.cursor/logs/
+.cursor/mcp.json
 
-# GitHub Copilot
-.copilot/
-.github/copilot-instructions.md
+# Windsurf - 只忽略缓存和日志，保留 rules/
+.windsurf/cache/
+.windsurf/logs/
 
-# Cline
-.cline/
-.clinerules
-.clineignore
-
-# Aider
-.aider*
-.aiderignore
-
-# Continue
-.continue/
-.continuerules
-.continueignore
-
-# Google Gemini
-.gemini/
-
-# Generic Agent
-.agent/
-
-# Amazon Q
-.amazonq/
-.q/
-
-# Augment
-.augment/
-.augmentignore
-
-# OpenAI Codex
-.codex/
-
-# JetBrains Junie
-.junie/
-
-# Sourcegraph Cody
-.cody/
-
-# Tabnine
-.tabnine/
-
-# Supermaven
-.supermaven/
+# Aider - 忽略聊天历史和缓存，保留 .aider.conf.yml
+.aider.chat.history.md
+.aider.input.history
+.aider.tags.cache.v3/
 EOF
 ```
+
+**不要忽略这些团队共享文件**：
+- `.cursorrules`、`.cursor/rules/`、`.cursor/commands/`
+- `.windsurfrules`、`.windsurf/rules/`
+- `.claude/commands/`、`.claude/settings.json`、`CLAUDE.md`
+- `.clinerules`、`.github/copilot-instructions.md`
+- `.aider.conf.yml`
 
 **注意**：添加前先检查 .gitignore 是否已包含这些规则，避免重复。
 
@@ -174,20 +153,21 @@ EOF
 
 如果用户选择清理已追踪的文件：
 
-```bash
-# 检查哪些 AI 编辑器文件已被追踪
-git ls-files | grep -E "^\.(claude|cursor|windsurf|copilot|cline|aider|continue|gemini|agent|amazonq|q|augment|codex|junie|cody|tabnine|supermaven)"
+**关键**：只清理缓存和本地敏感配置，不清理 commands/、rules/ 等团队共享目录！
 
-# 从 git 中移除追踪（保留本地文件）
-git rm -r --cached .claude/ .cursor/ .windsurf/ 2>/dev/null
-# ... 对所有已追踪的目录执行
+```bash
+# 检查哪些缓存/本地配置已被追踪
+git ls-files | grep -E "^\.claude/(settings\.local\.json|todos\.local\.json|plugins/|statsig/)"
+git ls-files | grep -E "^\.cursor/(index/|cache/|logs/|mcp\.json)"
+git ls-files | grep -E "^\.windsurf/(cache/|logs/)"
+git ls-files | grep -E "^\.aider\.(chat\.history|input\.history|tags\.cache)"
 ```
 
 **执行策略**：一次 Bash 调用完成所有清理
 
 ```bash
-# 获取所有已追踪的 AI 编辑器文件，然后一次性移除
-TRACKED_FILES=$(git ls-files | grep -E "^\.(claude|cursor|windsurf|copilot|cline|aider|continue|gemini|agent|amazonq|q|augment|codex|junie|cody|tabnine|supermaven|cursorrules|cursorignore|windsurfrules|clinerules|aiderignore|continuerules)")
+# 获取所有已追踪的缓存/本地配置文件（保留 commands/、rules/ 等共享目录）
+TRACKED_FILES=$(git ls-files | grep -E "(\.claude/(settings\.local\.json|todos\.local\.json|plugins/|statsig/)|\.cursor/(index/|cache/|logs/|mcp\.json)|\.windsurf/(cache/|logs/)|\.aider\.(chat\.history|input\.history|tags\.cache))")
 
 if [ -n "$TRACKED_FILES" ]; then
   echo "$TRACKED_FILES" | xargs git rm --cached -r
@@ -197,6 +177,14 @@ else
   echo "没有需要清理的已追踪文件"
 fi
 ```
+
+**不会被清理的文件**（团队共享）：
+- `.cursorrules`、`.cursor/rules/`、`.cursor/commands/`
+- `.windsurfrules`、`.windsurf/rules/`
+- `.claude/commands/`、`.claude/settings.json`
+- `CLAUDE.md`、`.clinerules`
+- `.github/copilot-instructions.md`
+- `.aider.conf.yml`
 
 ### Step 6: 配置 Shell 权限（如果用户选择）
 
@@ -274,8 +262,8 @@ writeJSON('.claude/settings.local.json', existing)
 
 ## 注意事项
 
-1. **安全提醒**：settings.local.json 可能包含 API Key 等敏感信息，务必忽略
-2. **团队共享**：.cursorrules/.windsurfrules 等规则文件是否需要共享取决于团队约定
+1. **只忽略本地配置**：不要忽略团队共享的规则文件（如 `.cursorrules`、`.claude/commands/`）
+2. **安全提醒**：`settings.local.json` 可能包含 API Key 等敏感信息，务必忽略
 3. **权限风险**：`Bash(*)` 允许所有命令，请确保了解风险
 4. **保留本地**：`git rm --cached` 只移除追踪，不删除本地文件
 
@@ -284,10 +272,11 @@ writeJSON('.claude/settings.local.json', existing)
 ### Q: 为什么 .claude/settings.local.json 需要忽略？
 A: 这个文件包含本地的权限配置，每个开发者的设置可能不同，不应该提交到仓库。
 
-### Q: 规则文件（如 .cursorrules）应该忽略吗？
-A: 取决于团队：
-- 如果是个人习惯配置 → 忽略
-- 如果是团队共享的 AI 提示规范 → 不忽略，但建议用 CLAUDE.md 等标准文件代替
+### Q: .cursorrules / .windsurfrules 应该忽略吗？
+A: **不应该忽略**。这些是团队共享的 AI 行为规则，应该提交到仓库让团队成员共享。
 
-### Q: 已经提交到远程仓库的文件怎么办？
+### Q: .claude/commands/ 应该忽略吗？
+A: **不应该忽略**。自定义命令是团队共享的，应该提交到仓库。
+
+### Q: 已经提交到远程仓库的本地配置怎么办？
 A: 执行本技能后，需要 push 到远程。其他人 pull 后，这些文件会从仓库消失，但如果他们本地有同名文件，不会被删除。

@@ -78,6 +78,87 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 
 ---
 
+### 🔐 secret-scan
+
+> 扫描代码中的硬编码密钥、API Key、数据库密码等敏感信息。
+
+**功能特性：**
+
+- 检测 API Key、Secret、Token、密码等硬编码敏感信息
+- 支持 AWS、阿里云、微信等主流平台密钥格式
+- 支持 .env 文件、配置文件、源码中的敏感信息
+- 按风险等级分级报告
+- 提供修复建议（环境变量、密钥管理等）
+
+**使用方式：**
+
+```
+/secret-scan
+```
+
+---
+
+### 🛠️ ai-editor-setup
+
+> 一键配置 AI 编辑器相关的 gitignore 规则、清理已提交的敏感文件、设置 shell 权限。
+
+**功能特性：**
+
+- 支持 Claude Code、Cursor、Windsurf、Aider 等主流 AI 编辑器
+- 智能忽略策略：只忽略缓存和本地配置，保留团队共享的 commands/rules
+- 自动清理已被 git 追踪的本地配置文件
+- 可选配置 Claude Code 的 shell 命令权限
+
+**使用方式：**
+
+```
+/ai-editor-setup
+```
+
+---
+
+### 🔀 git-merge-flow
+
+> 自动化分支合并流水线，将特性分支代码依次合并到开发分支和测试分支。
+
+**功能特性：**
+
+- 自动识别当前分支是否为特性分支（黑名单机制过滤 main/dev/test 等）
+- 自动检测仓库中的开发分支（dev/develop/development）和测试分支（test/testing/stage）
+- 支持多种合并策略：完整流水线 / 仅到开发 / 仅到测试 / 自定义
+- 冲突时自动调用 git-conflict-resolver 插件智能处理
+- 合并完成后自动推送远程并切回特性分支
+- 工作区有变更时自动 stash/pop
+
+**使用方式：**
+
+```
+/git-merge-flow
+```
+
+---
+
+> 安装 `writing-skills` 即可获得以下技能
+
+### 📝 weekly-report
+
+> 根据本周 Git 提交记录自动生成周报，支持多种预设格式。
+
+**功能特性：**
+
+- 自动提取本周 git log 提交记录
+- 支持多仓库并行扫描
+- 多种周报格式预设（简洁版、详细版等）
+- 自动分类归纳工作内容
+
+**使用方式：**
+
+```
+/weekly-report
+```
+
+---
+
 ## Plugins（插件）
 
 ### 🔍 refactor-suggest
@@ -120,6 +201,66 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 
 ```
 /dead-code
+```
+
+---
+
+### 🏗️ pm-proto-builder
+
+> 帮助产品经理快速构建后台原型，通过爬取现有后台系统菜单，自动生成可运行的 Vue3 前端原型项目和 PRD 文档。
+
+**功能特性：**
+
+- 使用 Playwright 爬取现有后台系统菜单结构
+- 自动生成 Vue3 + Element Plus 前端原型项目
+- 自动生成 PRD 文档
+- 支持自定义页面模板和布局
+
+**使用方式：**
+
+```
+/pm-proto-builder
+```
+
+---
+
+### ⚡ perf-analyzer
+
+> 分析前端项目性能，检测 bundle 大小、大依赖、tree-shaking 问题，提供优化建议。
+
+**功能特性：**
+
+- 分析 bundle 体积和依赖大小
+- 检测 tree-shaking 失效的模块
+- 识别大依赖和冗余依赖
+- 提供具体的优化建议和替代方案
+
+**使用方式：**
+
+```
+/perf-analyzer
+```
+
+---
+
+### 🔧 git-conflict-resolver
+
+> 智能解决 Git 合并冲突，逐文件逐冲突块处理。简单冲突自动静默合并，复杂业务冲突交互式询问用户选择解决方案。
+
+**功能特性：**
+
+- 支持 merge / rebase / cherry-pick / revert 四种合并类型
+- Python 脚本确定性解析冲突块，输出结构化 JSON
+- 简单冲突（空白差异、import 顺序、超集等）自动静默合并
+- 复杂业务冲突交互式引导用户逐块选择解决方案
+- 支持 diff3 格式、CRLF 标准化、git worktree、编码异常检测
+- 处理 lock 文件、二进制文件等特殊场景
+- 每个交互都提供"中止操作"选项
+
+**使用方式：**
+
+```
+/resolve
 ```
 
 ---

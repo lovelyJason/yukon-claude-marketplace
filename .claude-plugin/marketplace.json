@@ -16,7 +16,8 @@
         "./skills/error-explain",
         "./skills/prompt-optimize",
         "./skills/secret-scan",
-        "./skills/ai-editor-setup"
+        "./skills/ai-editor-setup",
+        "./skills/git-merge-flow"
       ]
     },
     {

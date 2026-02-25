@@ -1,0 +1,7 @@
+{
+  "name": "git-conflict-resolver",
+  "description": "智能解决 Git 合并冲突，逐文件逐冲突块处理。简单冲突自动静默合并，复杂业务冲突交互式询问用户选择解决方案",
+  "author": {
+    "name": "Jasonhuang"
+  }
+}

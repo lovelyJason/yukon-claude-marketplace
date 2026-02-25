@@ -55,6 +55,13 @@
       "source": "./plugins/perf-analyzer",
       "category": "quality",
       "keywords": ["performance", "bundle", "tree-shaking", "性能", "优化", "依赖分析"]
+    },
+    {
+      "name": "git-conflict-resolver",
+      "description": "智能解决 Git 合并冲突，逐文件逐冲突块处理。简单冲突自动静默合并，复杂业务冲突交互式询问用户选择解决方案",
+      "source": "./plugins/git-conflict-resolver",
+      "category": "git",
+      "keywords": ["git", "conflict", "merge", "rebase", "冲突", "合并"]
     }
   ]
 }

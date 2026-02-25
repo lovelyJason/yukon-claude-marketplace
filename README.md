@@ -136,6 +136,10 @@ Claude Code 插件集合，封装了一些实用的开发工具和技能。
 /git-merge-flow
 ```
 
+<img width="745" height="636" alt="image" src="https://github.com/user-attachments/assets/07756e62-b219-4726-a9e1-e48108ce39da" />
+
+大大提升了企业项目中提测发版的速度
+
 ---
 
 > 安装 `writing-skills` 即可获得以下技能

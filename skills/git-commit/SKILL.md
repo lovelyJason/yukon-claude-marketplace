@@ -152,11 +152,37 @@ build(deps): 升级 React 至 v18
 3. 运行 `git diff` 查看未暂存的变更
 4. 分析变更内容，确定 type、scope、subject
 5. 生成 commit message 并展示给用户
-6. 如果用户确认，执行 `git commit -m "message"`
+6. **必须**使用 AskUserQuestion 询问用户下一步操作（见下方"用户确认流程"）
+
+## 用户确认流程
+
+生成 commit message 展示后，**每次都必须**调用 AskUserQuestion，不得跳过、不得自行推测用户意图：
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "确认使用此 commit message？",
+    header: "提交确认",
+    options: [
+      { label: "直接提交", description: "执行 git commit，使用上方生成的 message" },
+      { label: "只输出 message", description: "仅显示 commit message，不执行提交，我来手动复制使用" },
+      { label: "修改后提交", description: "我来告诉你要改什么，改完后再提交" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+根据用户选择：
+
+- **直接提交**：执行 `git commit -m "生成的message"`，输出提交结果
+- **只输出 message**：用代码块格式展示完整 message，不执行任何 git 命令，结束
+- **修改后提交**：让用户说明修改意见，按意见调整 message 后，再次展示并重新走确认流程
 
 ## 注意事项
 
-- 如果没有暂存的变更，提示用户先 `git add`
+- 如果没有暂存的变更，提示用户先 `git add`，不要继续生成 message
 - 如果变更内容复杂，可生成多行 body
 - 如果有破坏性变更，必须在 footer 标注 BREAKING CHANGE
 - 默认使用中文撰写 commit message，除非用户明确要求英文
+- **严禁**在用户未通过 AskUserQuestion 确认前自行执行 `git commit`

@@ -9,7 +9,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 
 ## 工作流程
 
-```
+```text
 1. 检查 Git 状态 (git status)
 2. 获取暂存区 diff (git diff --cached) 和未暂存 diff (git diff)
 3. 分析代码变更内容和意图
@@ -21,7 +21,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 
 ### 格式
 
-```
+```text
 <type>(<scope>): <subject>
 
 <body>
@@ -48,6 +48,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 ### Scope 范围
 
 根据项目结构确定，常见值：
+
 - 模块名：`auth`、`user`、`api`
 - 目录名：`components`、`hooks`、`utils`
 - 功能域：`login`、`dashboard`、`settings`
@@ -74,6 +75,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 ### 1. 判断 Type
 
 根据变更内容判断：
+
 - 新增文件/函数/类 → `feat`
 - 修改已有逻辑修复问题 → `fix`
 - 仅修改 .md 文件 → `docs`
@@ -85,6 +87,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 ### 2. 确定 Scope
 
 优先级：
+
 1. 如果只改动单个模块/目录，使用该名称
 2. 如果改动多个相关模块，使用共同父级或功能域
 3. 如果改动分散，可省略 scope
@@ -92,6 +95,7 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 ### 3. 撰写 Subject
 
 提取变更核心意图，用简洁中文描述：
+
 - 添加xxx
 - 修复xxx
 - 更新xxx
@@ -104,7 +108,8 @@ description: 根据 Git 暂存区变更自动生成符合 Angular 规范的 comm
 ### 示例 1：新增功能
 
 变更：新增用户登录 API
-```
+
+```text
 feat(auth): 添加用户登录接口
 
 - 新增 POST /api/auth/login 接口
@@ -115,7 +120,8 @@ feat(auth): 添加用户登录接口
 ### 示例 2：修复 Bug
 
 变更：修复分页参数错误
-```
+
+```text
 fix(pagination): 修复分页页码计算错误
 
 修复计算页偏移量时的差一错误，
@@ -127,7 +133,8 @@ Closes #42
 ### 示例 3：重构
 
 变更：拆分大型组件
-```
+
+```text
 refactor(components): 拆分 UserProfile 为多个子组件
 
 将 Avatar、UserInfo、UserActions 提取为独立文件，
@@ -137,7 +144,8 @@ refactor(components): 拆分 UserProfile 为多个子组件
 ### 示例 4：多文件变更
 
 变更：升级依赖 + 适配代码
-```
+
+```text
 build(deps): 升级 React 至 v18
 
 - 更新 react 和 react-dom 到 18.2.0
@@ -158,13 +166,14 @@ build(deps): 升级 React 至 v18
 
 生成 commit message 展示后，**每次都必须**调用 AskUserQuestion，不得跳过、不得自行推测用户意图：
 
-```
+```javascript
 AskUserQuestion({
   questions: [{
     question: "确认使用此 commit message？",
     header: "提交确认",
     options: [
       { label: "直接提交", description: "执行 git commit，使用上方生成的 message" },
+      { label: "提交并推送", description: "执行 git commit 后推送到远端；若远端分支不存在则自动创建并设置 upstream" },
       { label: "只输出 message", description: "仅显示 commit message，不执行提交，我来手动复制使用" },
       { label: "修改后提交", description: "我来告诉你要改什么，改完后再提交" }
     ],
@@ -176,6 +185,10 @@ AskUserQuestion({
 根据用户选择：
 
 - **直接提交**：执行 `git commit -m "生成的message"`，输出提交结果
+- **提交并推送**：
+  - 先执行 `git commit -m "生成的message"`，输出提交结果
+  - 再执行 `git push -u origin HEAD`（即使远端分支还不存在也能创建，并设置 upstream）
+  - 若检测到仓库没有远程（`git remote -v` 为空），则只提交并提示用户无法推送
 - **只输出 message**：用代码块格式展示完整 message，不执行任何 git 命令，结束
 - **修改后提交**：让用户说明修改意见，按意见调整 message 后，再次展示并重新走确认流程
 
